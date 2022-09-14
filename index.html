@@ -14,9 +14,11 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
     const root = document.getElementById("root");
-    function Button({ name }) {
+    function Button({ text, onClick }) {
+      console.log(text, " was rendered.");
       return (
         <button
+          onClick={onClick}
           style={{
             backgroundColor: "tomato",
             color: "white",
@@ -25,15 +27,18 @@
             borderRadius: 10,
           }}
         >
-          {name}
+          {text}
         </button>
       );
     }
+    const MemorizedBtn = React.memo(Button);
     function App() {
+      const [value, setValue] = React.useState("Save Changes");
+      const changeValue = () => setValue("Convert Changes");
       return (
         <div>
-          <Button name="Save Changes" />
-          <Button name="Confirm" />
+          <MemorizedBtn text={value} onClick={changeValue} />
+          <MemorizedBtn text="Confirm" />
         </div>
       );
     }
